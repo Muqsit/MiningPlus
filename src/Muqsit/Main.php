@@ -7,8 +7,7 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\event\block\BlockBreakEvent;
-use pocketmine\command\Command;
-use pocketmine\command\CommandExecutor;
+use pocketmine\command\ConsoleCommandSender;
 
 class Main extends PluginBase implements Listener{
 /** @var array $breaks */
@@ -20,7 +19,8 @@ public function e_block_break(BlockBreakEvent $event){
    $name = strtolower(trim($event->getPlayer()->getName()));
    $this->breaks[]);
    if($this->breaks[$name] >= 128){
-      $event->getPlayer()->sendMessage("You broke 128 blocks!"));
+      $event->getPlayer()->sendMessage("§bWOHOOOO!"));
+      $this->getServer()->dispatchCommand("effect $name 3 100 5"
      }
    }
 }
