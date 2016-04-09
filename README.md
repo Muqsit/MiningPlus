@@ -1,0 +1,2 @@
+# MiningPlus
+Test plugin :D
