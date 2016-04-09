@@ -1,0 +1,5 @@
+name: MiningPlus
+main: Muqsit\Main
+version: 1.0.0
+api: [1.13.1, 2.0.0]
+author: Muqsit
