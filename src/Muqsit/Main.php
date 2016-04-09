@@ -20,7 +20,7 @@ public function e_block_break(BlockBreakEvent $event){
    $this->breaks[]);
    if($this->breaks[$name] >= 128){
       $event->getPlayer()->sendMessage("§bWOHOOOO!"));
-      $this->getServer()->dispatchCommand("effect $name 3 100 5"
+      $this->getServer()->dispatchCommand("effect $name 3 100 5");
      }
    }
 }
