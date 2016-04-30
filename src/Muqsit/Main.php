@@ -9,7 +9,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\utils\Config;
-use pocketmine\item\Iteem;
+use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as TF;
 
 class Main extends PluginBase implements Listener{
