@@ -13,34 +13,37 @@ use pocketmine\item\Item;
 use pocketmine\utils\TextFormat as TF;
 
 class Main extends PluginBase implements Listener{
-/** @var array $breaks */
-private $breaks;
-// Will you even be needing this?? :o
-public function onEnable(){
-    $this->getLogger()->info(" enabled");
-    $this->getServer()->getPluginManager()->registerEvents($this, $this);
-	    @mkdir($this->getDataFolder());
-        $this->saveDefaultConfig();
-        $this->reloadConfig();
-        $yml = new Config($this->getDataFolder() . "config.yml", Config::YAML, array());
-        $this->yml = $yml->getAll();
-        $this->saveResource("config.yml");
-}
+	
+	/** @var array $breaks */
+	private $breaks;
+	// Will you even be needing this?? :o
+	public function onEnable(){
+	    $this->getServer()->getPluginManager()->registerEvents($this, $this);
+		    @mkdir($this->getDataFolder());
+	       # Config isn't used.
+	       $this->getLogger()->info(" enabled"); # Don't add this log message at beggining of function it can be misleading
+	}
 
-// Thanks to @PrimusLV
-public function e_block_break(BlockBreakEvent $event){
-   $player = $event->getPlayer();
-   if($event->isCancelled()){
-      return;
-      $name = strtolower(trim($event->getPlayer()->getName()));
-      $this->breaks[]);
-      if($this->breaks[$name] >= 128){
-         $event->getPlayer()->sendMessage(TF::YELLOW ."You broke 128 blocks, "TF::AQUA ."WHOOOO!"));
-         $this->getServer()->dispatchCommand("effect $name 3 100 5");
-         
-      }else{
-         $this->getServer()->dispatchCommand("effect $name 3 100 5"); // idk, talk to me about this 'your plans'
-         break;
-      }
-   }
-}
+	// Thanks to @PrimusLV
+	public function onBlockBreak(BlockBreakEvent $event){
+	   if($event->isCancelled()) return;
+	   $player = $event->getPlayer();
+	      if($this->breaks[$name] >= 128){
+	         $event->getPlayer()->sendMessage(TF::YELLOW . "You broke 128 blocks, " . TF::AQUA . "WHOOOO!"));
+	         $this->giveEffect($player, 3, 100, 5);
+	         $this->breaks[$name] = 0; # Reset the counter, to avoid ^^ spam.
+	      }else{
+	        $this->breaks[$name]++;
+	      }
+	}
+	
+	/**
+	 * @param Player $player
+	 * @param int $id
+	 * @param int $duration
+	 * @param int $amplifier
+	 */
+	public function giveEffect(Player $player, $id, $duration, $amplifier){
+		$effect = Effect::getEffect($id)->setDuration($duration)->setAmplifier($amplifier); # Fluent setters <3
+		$player->addEffect($effect);
+	}
