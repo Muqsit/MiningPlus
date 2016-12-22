@@ -26,16 +26,16 @@ class Main extends PluginBase implements Listener{
 	}
 
 	// Thanks to @PrimusLV
-	public function onBlockBreak(BlockBreakEvent $event){
+	public static function onBlockBreak(BlockBreakEvent $event){
 	   if($event->isCancelled()) return;
 	   $name = $event->getPlayer()->getName();
 	   $player = $event->getPlayer();
-	      if($this->breaks[$name] >= 128){
+	      if(self::$breaks[$name] >= 128){
 	         $event->getPlayer()->sendMessage(TF::YELLOW . "You broke 128 blocks, " . TF::AQUA . "WHOOOO!");
-	         $this->giveEffect($player, 3, 100, 5);
-	         $this->breaks[$name] = 0; # Reset the counter, to avoid ^^ spam.
+	         self::giveEffect($player, 3, 100, 5);
+	         self::$breaks[$name] = 0; # Reset the counter, to avoid ^^ spam.
 	      }else{
-	        $this->breaks[$name]++;
+	        self::$breaks[$name]++;
 	      }
 	}
 	
@@ -45,7 +45,7 @@ class Main extends PluginBase implements Listener{
 	 * @param int $duration
 	 * @param int $amplifier
 	 */
-	public function giveEffect(Player $player, $id, $duration, $amplifier){
+	public static function giveEffect(Player $player, $id, $duration, $amplifier){
 		$effect = Effect::getEffect($id)->setDuration($duration)->setAmplifier($amplifier); # Fluent setters <3
 		$player->addEffect($effect);
 	}
